@@ -101,7 +101,7 @@ export default class RandomPicker {
         await this.discord.info("Calculating chances for each NFT 🤓");
         for (const event of events) {
           const { tokenId } = event.args;
-          const tipAmount = await this.tipContract.accumulatedTipAmount(tokenId);
+          const tipAmount = await this.tipContract.totalBurnValue(tokenId);
           const id = tokenId.toString();
           const amount = new BigNumber(tipAmount.toString()).dividedBy(1e18).toNumber();
           resultMap[id] = amount;
@@ -116,7 +116,7 @@ export default class RandomPicker {
           const amount = resultMap[id];
           const chance = (amount / totalTipAmount) * 100;
           chances.push({ id, chance });
-          msg += `Edition #${id} - ${amount.toFixed(2)} DIXEL tipped (${chance.toFixed(5)}% chance)\n`;
+          msg += `Edition #${id} - ${amount.toFixed(2)} DIXEL burn value (${chance.toFixed(5)}% chance)\n`;
         }
 
         await this.discord.sendEmbed("Lottery chances 🎲", msg);
