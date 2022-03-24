@@ -104,10 +104,8 @@ export default class RandomPicker {
           const tipAmount = await this.tipContract.accumulatedTipAmount(tokenId);
           const id = tokenId.toString();
           const amount = new BigNumber(tipAmount.toString()).dividedBy(1e18).toNumber();
-          if (amount > 0) {
-            resultMap[id] = amount;
-            totalTipAmount += amount;
-          }
+          resultMap[id] = amount;
+          totalTipAmount += amount;
         }
 
         console.log(resultMap);
