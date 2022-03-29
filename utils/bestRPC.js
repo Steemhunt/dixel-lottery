@@ -15,7 +15,7 @@ const MAINNET_NODES = [
   "https://binance.ankr.com/",
   "https://bsc-dataseed.binance.org/",
   "https://bsc-dataseed1.defibit.io/",
-  "https://bsc-dataseed1.ninicoin.io/",
+  //   "https://bsc-dataseed1.ninicoin.io/",
   "https://bsc-dataseed1.binance.org/",
   "https://bsc-dataseed2.defibit.io/",
   "https://bsc-dataseed2.ninicoin.io/",

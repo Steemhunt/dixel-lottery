@@ -79,13 +79,20 @@ export default class RandomPicker {
           onComplete();
           return;
         }
-        const blocksToSubtract = Math.min(currentBlock - startBlock, 5000);
-        console.log("blocks to subtract", blocksToSubtract);
-        console.log("calculating block from", currentBlock - blocksToSubtract, "to", currentBlock);
-        const e = await this.nftContract.queryFilter("Mint", currentBlock - blocksToSubtract, currentBlock);
-        console.log(e.length, "mint events found");
-        events = events.concat(e);
-        getEventsUntil(startBlock, currentBlock - blocksToSubtract - 1, onComplete);
+
+        try {
+          const blocksToSubtract = Math.min(currentBlock - startBlock, 5000);
+          console.log("blocks to subtract", blocksToSubtract);
+          console.log("calculating block from", currentBlock - blocksToSubtract, "to", currentBlock);
+          const e = await this.nftContract.queryFilter("Mint", currentBlock - blocksToSubtract, currentBlock);
+          console.log(e.length, "mint events found");
+          events = events.concat(e);
+          getEventsUntil(startBlock, currentBlock - blocksToSubtract - 1, onComplete);
+        } catch (e) {
+          console.error(e);
+          console.log("something went wrong. trying again with the same params");
+          getEventsUntil(startBlock, currentBlock, onComplete);
+        }
       };
 
       console.log("calculating events from", blockDayAgo.block, "to", currentBlockNumber);
