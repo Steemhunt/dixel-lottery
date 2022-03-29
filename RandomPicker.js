@@ -98,6 +98,11 @@ export default class RandomPicker {
       console.log("calculating events from", blockDayAgo.block, "to", currentBlockNumber);
 
       await getEventsUntil(blockDayAgo.block, currentBlockNumber, async () => {
+        if (events.length === 0) {
+          await this.discord.info(`No events found in the last 24 hours. Terminating BOT.`);
+          return;
+        }
+
         await this.discord.info(`Total of ${events.length} Mint events found! 🎉`);
         console.log("total of", events.length, "mint events found!");
 
